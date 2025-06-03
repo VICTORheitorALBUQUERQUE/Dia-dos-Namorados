@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    
+      <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>SITE-PARA-QRcode</title>
+
+  <!-- Fonte cursiva do Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
+  <style>
+    /* Seu CSS aqui... */
+    header h1 {
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+      font-family: 'Dancing Script', cursive;
+
+    }
+.carrossel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.carrossel {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  touch-action: pan-y;
+}
+
+.carrossel img {
+  min-width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.seta.esquerda {
+  left: 10px;
+}
+
+.seta.direita {
+  right: 10px;
+}
+
+#chuva-emojis {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.emoji {
+  position: absolute;
+  font-size: 2rem;
+  animation: cair linear forwards;
+}
+
+@keyframes cair {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+
+  </style>
+
+
+
+  <style>
+
+.carrossel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.carrossel {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  touch-action: pan-y;
+}
+
+.carrossel img {
+  min-width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.seta.esquerda { left: 10px; }
+.seta.direita { right: 10px; }
+
+.indicadores {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.indicadores span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 5px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.indicadores .ativo {
+  background-color: #333;
+}
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #000000;
+      text-align: center;
+    }
+
+    header {
+      background-color: #ff000438;
+      color: white;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+    header audio {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 10px;
+    }
+
+    #contador {
+      font-size: 1.6rem;
+      margin: 30px 10px;
+      color: #ffffff;
+    }
+
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .quadro {
+      border: 8px solid #ff0101;
+      padding: 10px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 90%;
+    }
+
+    .quadro img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Responsividade */
+    @media (min-width: 600px) {
+      .quadro {
+        max-width: 45%;
+      }
+    }
+
+    @media (min-width: 900px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      #contador {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="chuva-emojis"></div>
+
+<header>
+  <h1>Feliz dia dos namorados!</h1>
+  <audio controls autoplay loop>
+    <source src="SEM TI - Quarteto Coração de Potro.mp3" type="audio/mpeg">
+  </audio>
+</header>
+
+<div id="contador">
+ 
+</div>
+
+<div class="carrossel-container">
+  <div class="carrossel" id="carrossel">
+    <img src="imagem 1.jpeg.jfif" alt="Imagem 1">
+    <img src="imagem 2.jpeg" alt="Imagem 2">
+    <img src="imagem 3.jpeg" alt="Imagem 3">
+    <img src="imagem 4.jpeg" alt="Imagem 4">
+  </div>
+  <button class="seta esquerda" onclick="moverCarrossel(-1)">❮</button>
+  <button class="seta direita" onclick="moverCarrossel(1)">❯</button>
+  <div class="indicadores" id="indicadores"></div>
+</div>
+
+<script>
+  const emojis = ['❤️', '💖', '💘', '💕', '✨', '🥰', '❤️', '💖', '💘', '💕', '✨', '🥰']; // Você pode trocar
+  const container = document.getElementById('chuva-emojis');
+
+  function criarEmoji() {
+    const emoji = document.createElement('div');
+    emoji.classList.add('emoji');
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    // Posicionamento aleatório no topo
+    emoji.style.left = Math.random() * 100 + 'vw';
+    emoji.style.top = '-2rem';
+
+    // Duração e tamanho aleatórios
+    const duracao = Math.random() * 2 + 3; // 3 a 5s
+    emoji.style.animationDuration = duracao + 's';
+    emoji.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+
+    container.appendChild(emoji);
+
+    // Remover o emoji depois que a animação acabar
+    setTimeout(() => {
+      emoji.remove();
+    }, duracao * 1000);
+  }
+
+  // Criar emojis em intervalo
+  setInterval(criarEmoji, 300); // um a cada 300ms
+</script>
+
+
+<script>
+
+  function calcularTempoDecorrido(inicio) {
+    const agora = new Date();
+    let anos = agora.getFullYear() - inicio.getFullYear();
+    let meses = agora.getMonth() - inicio.getMonth();
+    let dias = agora.getDate() - inicio.getDate();
+    let horas = agora.getHours() - inicio.getHours();
+    let minutos = agora.getMinutes() - inicio.getMinutes();
+    let segundos = agora.getSeconds() - inicio.getSeconds();
+
+    if (segundos < 0) {
+      segundos += 60;
+      minutos--;
+    }
+    if (minutos < 0) {
+      minutos += 60;
+      horas--;
+    }
+    if (horas < 0) {
+      horas += 24;
+      dias--;
+    }
+    if (dias < 0) {
+      meses--;
+      const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
+      dias += ultimoMes.getDate();
+    }
+    if (meses < 0) {
+      meses += 12;
+      anos--;
+    }
+
+    const totalMeses = anos * 12 + meses;
+
+    return {
+      meses: totalMeses,
+      dias: dias,
+      horas: horas,
+      minutos: minutos,
+      segundos: segundos
+    };
+  }
+
+  function atualizarContador() {
+    const inicio = new Date("2025-05-13T00:00:00");
+    const tempo = calcularTempoDecorrido(inicio);
+
+    document.getElementById("contador").innerHTML =
+      `${tempo.meses} meses, ${tempo.dias} dias, ${tempo.horas}h ${tempo.minutos}min ${tempo.segundos}s `;
+  }
+
+  atualizarContador();
+  setInterval(atualizarContador, 1000); // Atualiza a cada segundo
+</script>
+
+<script>
+  const carrossel = document.getElementById('carrossel');
+  const totalSlides = carrossel.children.length;
+  const indicadoresContainer = document.getElementById('indicadores');
+  let indiceAtual = 0;
+  let autoplayInterval;
+
+  // Criar os indicadores (bolinhas)
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('span');
+    dot.addEventListener('click', () => {
+      indiceAtual = i;
+      atualizarCarrossel();
+      resetarAutoplay();
+    });
+    indicadoresContainer.appendChild(dot);
+  }
+
+  function atualizarCarrossel() {
+    carrossel.style.transform = `translateX(-${indiceAtual * 100}%)`;
+    atualizarIndicadores();
+  }
+
+  function moverCarrossel(direcao) {
+    indiceAtual += direcao;
+    if (indiceAtual < 0) indiceAtual = totalSlides - 1;
+    if (indiceAtual >= totalSlides) indiceAtual = 0;
+    atualizarCarrossel();
+    resetarAutoplay();
+  }
+
+  function atualizarIndicadores() {
+    const dots = indicadoresContainer.children;
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('ativo', i === indiceAtual);
+    }
+  }
+
+  // Swipe touch
+  let posInicialX = null;
+
+  carrossel.addEventListener('touchstart', e => {
+    posInicialX = e.touches[0].clientX;
+  });
+
+  carrossel.addEventListener('touchend', e => {
+    if (posInicialX === null) return;
+    const posFinalX = e.changedTouches[0].clientX;
+    const diff = posInicialX - posFinalX;
+
+    if (Math.abs(diff) > 50) {
+      moverCarrossel(diff > 0 ? 1 : -1);
+    }
+    posInicialX = null;
+  });
+
+  // Auto play
+  function iniciarAutoplay() {
+    autoplayInterval = setInterval(() => {
+      moverCarrossel(1);
+    }, 5000); // troca a cada 5 segundos
+  }
+
+  function resetarAutoplay() {
+    clearInterval(autoplayInterval);
+    iniciarAutoplay();
+  }
+
+  // Inicializar
+  atualizarCarrossel();
+  iniciarAutoplay();
+</script>
+</body>
+
+
+
+</html>
